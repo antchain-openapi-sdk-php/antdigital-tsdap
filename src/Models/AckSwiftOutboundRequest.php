@@ -9,14 +9,12 @@ class AckSwiftOutboundRequest extends Model {
     protected $_name = [
         'authToken' => 'auth_token',
         'productInstanceId' => 'product_instance_id',
-        'messageId' => 'message_id',
         'requestId' => 'request_id',
         'ackedAt' => 'acked_at',
         'rawMessage' => 'raw_message',
         'receiptFormat' => 'receipt_format',
     ];
     public function validate() {
-        Model::validateRequired('messageId', $this->messageId, true);
         Model::validateRequired('requestId', $this->requestId, true);
         Model::validateRequired('ackedAt', $this->ackedAt, true);
         Model::validateRequired('rawMessage', $this->rawMessage, true);
@@ -29,9 +27,6 @@ class AckSwiftOutboundRequest extends Model {
         }
         if (null !== $this->productInstanceId) {
             $res['product_instance_id'] = $this->productInstanceId;
-        }
-        if (null !== $this->messageId) {
-            $res['message_id'] = $this->messageId;
         }
         if (null !== $this->requestId) {
             $res['request_id'] = $this->requestId;
@@ -59,9 +54,6 @@ class AckSwiftOutboundRequest extends Model {
         if(isset($map['product_instance_id'])){
             $model->productInstanceId = $map['product_instance_id'];
         }
-        if(isset($map['message_id'])){
-            $model->messageId = $map['message_id'];
-        }
         if(isset($map['request_id'])){
             $model->requestId = $map['request_id'];
         }
@@ -86,12 +78,6 @@ class AckSwiftOutboundRequest extends Model {
      * @var string
      */
     public $productInstanceId;
-
-    // 在claim的时候获得的DAP给报文消息分配的唯一id，32位
-    /**
-     * @var string
-     */
-    public $messageId;
 
     // 本次 ACK/NACK 请求 ID，32位，调用方设置，用于审计和排查
     /**

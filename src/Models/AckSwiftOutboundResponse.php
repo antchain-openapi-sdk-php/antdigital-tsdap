@@ -10,10 +10,9 @@ class AckSwiftOutboundResponse extends Model {
         'reqMsgId' => 'req_msg_id',
         'resultCode' => 'result_code',
         'resultMsg' => 'result_msg',
-        'messageId' => 'message_id',
         'duplicate' => 'duplicate',
         'ackedAt' => 'acked_at',
-        'receiptStatus' => 'receipt_status',
+        'accepted' => 'accepted',
     ];
     public function validate() {}
     public function toMap() {
@@ -27,17 +26,14 @@ class AckSwiftOutboundResponse extends Model {
         if (null !== $this->resultMsg) {
             $res['result_msg'] = $this->resultMsg;
         }
-        if (null !== $this->messageId) {
-            $res['message_id'] = $this->messageId;
-        }
         if (null !== $this->duplicate) {
             $res['duplicate'] = $this->duplicate;
         }
         if (null !== $this->ackedAt) {
             $res['acked_at'] = $this->ackedAt;
         }
-        if (null !== $this->receiptStatus) {
-            $res['receipt_status'] = $this->receiptStatus;
+        if (null !== $this->accepted) {
+            $res['accepted'] = $this->accepted;
         }
         return $res;
     }
@@ -56,17 +52,14 @@ class AckSwiftOutboundResponse extends Model {
         if(isset($map['result_msg'])){
             $model->resultMsg = $map['result_msg'];
         }
-        if(isset($map['message_id'])){
-            $model->messageId = $map['message_id'];
-        }
         if(isset($map['duplicate'])){
             $model->duplicate = $map['duplicate'];
         }
         if(isset($map['acked_at'])){
             $model->ackedAt = $map['acked_at'];
         }
-        if(isset($map['receipt_status'])){
-            $model->receiptStatus = $map['receipt_status'];
+        if(isset($map['accepted'])){
+            $model->accepted = $map['accepted'];
         }
         return $model;
     }
@@ -88,12 +81,6 @@ class AckSwiftOutboundResponse extends Model {
      */
     public $resultMsg;
 
-    // DAP平台分配的报文消息唯一id，32位
-    /**
-     * @var string
-     */
-    public $messageId;
-
     // 是否重复发送消息
     /**
      * @var bool
@@ -106,10 +93,10 @@ class AckSwiftOutboundResponse extends Model {
      */
     public $ackedAt;
 
-    // RECEIVED：回执已保存，包括解析或关联校验失败；CONFLICT：回执已保存，但投递已终态，不覆盖原结果。两种情况均无需重发。
+    // 收到回执并已成功持久化，返回true
     /**
-     * @var string
+     * @var bool
      */
-    public $receiptStatus;
+    public $accepted;
 
 }
